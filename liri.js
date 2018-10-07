@@ -11,9 +11,8 @@ var command = process.argv[2];
 
 // Accessing the Spotify API to retreive song information
 function searchSpotify (input) {
-
+    // Allowing the input to search multi-word songs
     var input = process.argv[3];
-
 
     spotify.search({type: 'track', query: input}, function(error, data) {
         if (error) {
@@ -31,15 +30,20 @@ function searchSpotify (input) {
 
 // Accessing the Bands in Town API to get concert information
 function searchBIT (input) {
-    var input = process.argv[3];
-    request("https://rest.bandsintown.com/artists/" + input + "/events?app_id=codingbootcamp", function(error, response) {
+    // Allowing the input to take more than single word bands
+    var input = process.argv.slice(3).join(" ");
+    // Requiring moment to format the concert date
+    var moment = require("moment");
+    // Bands in Town Request
+    request("https://rest.bandsintown.com/artists/" + input + "/events?app_id=codingbootcamp", function(error, response, body) {
         if (error) {
             console.log("An error occured: " + error)
         } else {
+            // console.log(body);
             console.log(
-                "Venue name: " + response.venue.name +
-                "Location: " + response.venue.city +
-                "Event Date: " + response.datetime
+                "Venue name: " + JSON.parse(body)[0].venue.name +
+                "\nLocation: " + JSON.parse(body)[0].venue.city +
+                "\nEvent Date: " + moment(JSON.parse(body)[0].venue.datetime).format("MM/DD/YYYY")
             );
         };
     })
@@ -49,12 +53,11 @@ function searchBIT (input) {
 function searchOMDB (input) {
     // Allowing the input to take more than single word movies
     var input = process.argv.slice(3).join(" ");
-
+    // OMDB request
     request("http://www.omdbapi.com/?t=" + input + "&y=&plot=short&apikey=trilogy", function (error, response, body) {
         if (error) {
             console.log("An error occured: " + error)
         } else {
-            // console.log(response);
             console.log(
                 "Movie title: " + JSON.parse(body).Title +
                 "\nReleased: " + JSON.parse(body).Year +
