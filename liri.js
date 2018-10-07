@@ -1,17 +1,18 @@
 // Requiring and configuring dotenv
 require("dotenv").config();
 
-var keys = require("keys.js");
+var request = require("request");
+var keys = require("./keys.js");
+var Spotify = require("node-spotify-api");
 var spotify = new Spotify(keys.spotify);
-var spotify = require("node-spotify-api");
 
-var songName = process.argv[2];
+var songName = (process.argv[2]).split(" ");
 
 spotify
   .search({ type: 'track', query: songName })
-  .then(function(response) {
+  .then(function(data) {
     console.log(
-            "The name of the song is: " + response.album.name 
+            "The name of the song is: " + data.album.name 
             // "\nThe name of the artist is: " + response.album.artists.name +
             // "\nThe album this song is found on is: " + response.albums +
             // "\nHere is a preview of the song: " + response.
