@@ -12,19 +12,20 @@ var command = process.argv[2];
 // Accessing the Spotify API to retreive song information
 function searchSpotify (input) {
     // Allowing the input to search multi-word songs
-    var input = process.argv[3];
-
-    spotify.search({type: 'track', query: input}, function(error, data) {
+    var input = process.argv.slice(3).join(" ");
+    //Searching Spotify for track information
+    spotify.search({type: "track", query: input}, function(error, data) {
         if (error) {
           console.log("An error occurred: " + error);
         } else {
+            // console.log(data);
             console.log(
-                "Song title: " + data.body
+                "Song title: " + data.tracks.items[0].name +
+                "\nArtist: " + data.tracks.items[0].artists[0].name 
+
             )
         }
-       
-      console.log(data); 
-      });
+    });
 }
 
 
@@ -41,7 +42,8 @@ function searchBIT (input) {
         } else {
             // console.log(body);
             console.log(
-                "Venue name: " + JSON.parse(body)[0].venue.name +
+                "Lineup: " + JSON.parse(body)[0].lineup +
+                "\nVenue name: " + JSON.parse(body)[0].venue.name +
                 "\nLocation: " + JSON.parse(body)[0].venue.city +
                 "\nEvent Date: " + moment(JSON.parse(body)[0].venue.datetime).format("MM/DD/YYYY")
             );
