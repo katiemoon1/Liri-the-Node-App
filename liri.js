@@ -7,8 +7,6 @@ var Spotify = require("node-spotify-api");
 var spotify = new Spotify(keys.spotify);
 var command = process.argv[2];
 
-
-
 // Accessing the Spotify API to retreive song information
 function searchSpotify (input) {
     // Allowing the input to search multi-word songs
@@ -26,8 +24,7 @@ function searchSpotify (input) {
             )
         }
     });
-}
-
+};
 
 // Accessing the Bands in Town API to get concert information
 function searchBIT (input) {
@@ -72,6 +69,26 @@ function searchOMDB (input) {
             );
         }
     })
+};
+
+// Accessing the random.txt file to search via Spotify
+function doAsFileSays () {
+    // Requiring fs
+    var fs = require("fs");
+    // // Making input equal to the file
+    // var input = data;
+    // Reading the random.txt file
+    fs.readFile("random.txt", "utf8", function (error, data) {
+
+        if (error) {
+            console.log("An error occured: " + error)
+        } else {
+           console.log(data);
+           var information = data.split(",");
+           searchSpotify(information);
+           console.log(information);
+        }
+    })
 }
 
 // Creating a switch statement to loop through functions 
@@ -89,7 +106,7 @@ switch (command) {
     break;
 
     case "do-what-it-says":
-    searchSpotify();
+    doAsFileSays();
     break;
 }
 
