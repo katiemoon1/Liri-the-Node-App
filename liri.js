@@ -11,7 +11,10 @@ var command = process.argv[2];
 
 // Accessing the Spotify API to retreive song information
 function searchSpotify (input) {
+
     var input = process.argv[3];
+
+
     spotify.search({type: 'track', query: input}, function(error, data) {
         if (error) {
           console.log("An error occurred: " + error);
@@ -44,7 +47,9 @@ function searchBIT (input) {
 
 // Accessing the OMDB API to get movie information
 function searchOMDB (input) {
-    var input = process.argv[3];
+    // Allowing the input to take more than single word movies
+    var input = process.argv.slice(3).join(" ");
+
     request("http://www.omdbapi.com/?t=" + input + "&y=&plot=short&apikey=trilogy", function (error, response, body) {
         if (error) {
             console.log("An error occured: " + error)
@@ -83,4 +88,5 @@ switch (command) {
     break;
 }
 
+// Used to take a look at the process.argv array to ensure that I am pulling the correct string
 console.log(process.argv);
