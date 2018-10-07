@@ -8,21 +8,17 @@ var spotify = new Spotify(keys.spotify);
 var command = process.argv[2];
 
 // Accessing the Spotify API to retreive song information
-function searchSpotify (input) {
+function searchSpotify () {
     // Allowing the input to search multi-word songs
     var input = process.argv.slice(3).join(" ");
+    // If nothing is searched, The Sign will be used
+    if (input === "") {
+        input = "The Sign Ace of Base"
+    };
     //Searching Spotify for track information
     spotify.search({type: "track", query: input}, function(error, data) {
         if (error) {
           console.log("An error occurred: " + error);
-        } else if (input === undefined) {
-            var input = "The Sign";
-            console.log(
-                "Song title: " + data.tracks.items[0].name +
-                "\nArtist: " + data.tracks.items[0].artists[0].name +
-                "\nAlbum: " + data.tracks.items[0].album.name +
-                "\nSong preview: " + data.tracks.items[0].href
-            );
         } else {
             console.log(
                 "Song title: " + data.tracks.items[0].name +
@@ -35,7 +31,7 @@ function searchSpotify (input) {
 };
 
 // Accessing the Bands in Town API to get concert information
-function searchBIT (input) {
+function searchBIT () {
     // Allowing the input to take more than single word bands
     var input = process.argv.slice(3).join(" ");
     // Requiring moment to format the concert date
@@ -57,25 +53,17 @@ function searchBIT (input) {
 };
 
 // Accessing the OMDB API to get movie information
-function searchOMDB (input) {
+function searchOMDB () {
     // Allowing the input to take more than single word movies
     var input = process.argv.slice(3).join(" ");
+    // If nothing is searched, Mr. Nobody will be used.
+    if (input === "") {
+        input = "Mr. Nobody"
+    };
     // OMDB request
     request("http://www.omdbapi.com/?t=" + input + "&y=&plot=short&apikey=trilogy", function (error, response, body) {
         if (error) {
             console.log("An error occured: " + error)
-        } else if (input === undefined) {
-            var input = "Mr. Nobody";
-            console.log(
-                "Movie title: " + JSON.parse(body).Title +
-                "\nReleased: " + JSON.parse(body).Year +
-                "\nIMDB Rating: " + JSON.parse(body).imdbRating +
-                "\nRotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value +
-                "\nThe movie was produced in: " + JSON.parse(body).Country +
-                "\nLanguage: " + JSON.parse(body).Language +
-                "\nThe Plot: " + JSON.parse(body).Plot +
-                "\nThe Actors: " +  JSON.parse(body).Actors
-            );
         } else {
             console.log(
                 "Movie title: " + JSON.parse(body).Title +
@@ -95,8 +83,8 @@ function searchOMDB (input) {
 function doAsFileSays () {
     // Requiring fs
     var fs = require("fs");
-    // // Making input equal to the file
-    // var input = data;
+    // Making input equal to the file
+    var input = [];
     // Reading the random.txt file
     fs.readFile("random.txt", "utf8", function (error, data) {
 
@@ -104,32 +92,36 @@ function doAsFileSays () {
             console.log("An error occured: " + error)
         } else {
            console.log(data);
-            var split = data.split(",");
-            console.log(split);
-            var newSearch = searchSpotify(split[1]);
+            input = data.split(",");
+            console.log(input);
+            var newSearch = switchFunction(commandFromFile);
             console.log(newSearch);
         }
     })
 }
 
 // Creating a switch statement to loop through functions 
-switch (command) {
-    case "spotify-this-song":
-    searchSpotify();
-    break;
+// var switchFunction = function (command) {
+    switch (command) {
+        case "spotify-this-song":
+        searchSpotify();
+        break;
 
-    case "concert-this":
-    searchBIT();
-    break;
+        case "concert-this":
+        searchBIT();
+        break;
 
-    case "movie-this":
-    searchOMDB();
-    break;
+        case "movie-this":
+        searchOMDB();
+        break;
 
-    case "do-what-it-says":
-    doAsFileSays();
-    break;
-}
+        case "do-what-it-says":
+        doAsFileSays();
+        break;
+    };
+
+
+
 
 // Used to take a look at the process.argv array to ensure that I am pulling the correct string
 console.log(process.argv);
