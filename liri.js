@@ -15,14 +15,22 @@ function searchSpotify (input) {
     spotify.search({type: "track", query: input}, function(error, data) {
         if (error) {
           console.log("An error occurred: " + error);
+        } else if (input === undefined) {
+            var input = "The Sign";
+            console.log(
+                "Song title: " + data.tracks.items[0].name +
+                "\nArtist: " + data.tracks.items[0].artists[0].name +
+                "\nAlbum: " + data.tracks.items[0].album.name +
+                "\nSong preview: " + data.tracks.items[0].href
+            );
         } else {
             console.log(
                 "Song title: " + data.tracks.items[0].name +
                 "\nArtist: " + data.tracks.items[0].artists[0].name +
                 "\nAlbum: " + data.tracks.items[0].album.name +
                 "\nSong preview: " + data.tracks.items[0].href
-            )
-        }
+            );
+        };
     });
 };
 
@@ -56,6 +64,18 @@ function searchOMDB (input) {
     request("http://www.omdbapi.com/?t=" + input + "&y=&plot=short&apikey=trilogy", function (error, response, body) {
         if (error) {
             console.log("An error occured: " + error)
+        } else if (input === undefined) {
+            var input = "Mr. Nobody";
+            console.log(
+                "Movie title: " + JSON.parse(body).Title +
+                "\nReleased: " + JSON.parse(body).Year +
+                "\nIMDB Rating: " + JSON.parse(body).imdbRating +
+                "\nRotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value +
+                "\nThe movie was produced in: " + JSON.parse(body).Country +
+                "\nLanguage: " + JSON.parse(body).Language +
+                "\nThe Plot: " + JSON.parse(body).Plot +
+                "\nThe Actors: " +  JSON.parse(body).Actors
+            );
         } else {
             console.log(
                 "Movie title: " + JSON.parse(body).Title +
@@ -84,9 +104,10 @@ function doAsFileSays () {
             console.log("An error occured: " + error)
         } else {
            console.log(data);
-           var information = data.split(",");
-           searchSpotify(information);
-           console.log(information);
+            var split = data.split(",");
+            console.log(split);
+            var newSearch = searchSpotify(split[1]);
+            console.log(newSearch);
         }
     })
 }
