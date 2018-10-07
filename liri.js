@@ -54,8 +54,12 @@ function searchOMDB (input) {
                 "Movie title: " + JSON.parse(body).Title +
                 "\nReleased: " + JSON.parse(body).Year +
                 "\nIMDB Rating: " + JSON.parse(body).imdbRating +
-                "\nRotten Tomatoes Rating: " + JSON.parse(body).Ratings
-            )
+                "\nRotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value +
+                "\nThe movie was produced in: " + JSON.parse(body).Country +
+                "\nLanguage: " + JSON.parse(body).Language +
+                "\nThe Plot: " + JSON.parse(body).Plot +
+                "\nThe Actors: " +  JSON.parse(body).Actors
+            );
         }
     })
 }
