@@ -5,19 +5,36 @@ var request = require("request");
 var keys = require("./keys.js");
 var Spotify = require("node-spotify-api");
 var spotify = new Spotify(keys.spotify);
+var songName = process.argv[2];
+var artist = process.argv[3];
 
-var songName = (process.argv[2]).split(" ");
+// Accessing the Spotify API to retreive song information
+function searchSpotify (songName) {
+    spotify.search({type: 'track', query: songName}, function(error, data) {
+        if (error) {
+          console.log("An error occurred: " + error);
+        } else {
+            console.log(
+                "Song title: " + data.body
+            )
+        }
+       
+      console.log(data); 
+      });
+}
 
-spotify
-  .search({ type: 'track', query: songName })
-  .then(function(data) {
-    console.log(
-            "The name of the song is: " + data.album.name 
-            // "\nThe name of the artist is: " + response.album.artists.name +
-            // "\nThe album this song is found on is: " + response.albums +
-            // "\nHere is a preview of the song: " + response.
-            );
-  })
-  .catch(function(err) {
-    console.log(err);
-  });
+
+// Accessing the Bands in Town API to get concert information
+function searchBIT (artist) {
+    request("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp", function(error, response) {
+        if (error) {
+            console.log("An error occured: " + error)
+        } else {
+            console.log(
+                "Venue name: " + response.venue.name +
+                "Location: " + response.venue.city
+            )
+        }
+    })
+};
+
