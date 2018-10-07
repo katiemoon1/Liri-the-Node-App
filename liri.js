@@ -18,11 +18,11 @@ function searchSpotify (input) {
         if (error) {
           console.log("An error occurred: " + error);
         } else {
-            // console.log(data);
             console.log(
                 "Song title: " + data.tracks.items[0].name +
-                "\nArtist: " + data.tracks.items[0].artists[0].name 
-
+                "\nArtist: " + data.tracks.items[0].artists[0].name +
+                "\nAlbum: " + data.tracks.items[0].album.name +
+                "\nSong preview: " + data.tracks.items[0].href
             )
         }
     });
