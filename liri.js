@@ -9,13 +9,14 @@ var command = process.argv[2];
 
 // Accessing the Spotify API to retreive song information
 function searchSpotify () {
+
     // Allowing the input to search multi-word songs
     var input = process.argv.slice(3).join(" ");
     // If nothing is searched, The Sign will be used
     if (input === "") {
         input = "The Sign Ace of Base"
     };
-    //Searching Spotify for track information
+    // Searching Spotify for track information
     spotify.search({type: "track", query: input}, function(error, data) {
         if (error) {
           console.log("An error occurred: " + error);
@@ -58,7 +59,7 @@ function searchOMDB () {
     var input = process.argv.slice(3).join(" ");
     // If nothing is searched, Mr. Nobody will be used.
     if (input === "") {
-        input = "Mr. Nobody"
+        input = "Fantastic Mr. Fox"
     };
     // OMDB request
     request("http://www.omdbapi.com/?t=" + input + "&y=&plot=short&apikey=trilogy", function (error, response, body) {
@@ -93,15 +94,18 @@ function doAsFileSays () {
         } else {
            console.log(data);
             input = data.split(",");
+            var fileCommand = input[0];
+            var newSearch = input[1];
             console.log(input);
-            var newSearch = switchFunction(commandFromFile);
-            console.log(newSearch);
+            console.log(input[0]);
+            switchFunction(fileCommand)
+            
         }
     })
 }
 
 // Creating a switch statement to loop through functions 
-// var switchFunction = function (command) {
+var switchFunction = function (command) {
     switch (command) {
         case "spotify-this-song":
         searchSpotify();
@@ -119,9 +123,10 @@ function doAsFileSays () {
         doAsFileSays();
         break;
     };
+};
 
-
-
+// Calling the switchFunction so that it runs each time
+switchFunction(command);
 
 // Used to take a look at the process.argv array to ensure that I am pulling the correct string
 console.log(process.argv);
