@@ -5,13 +5,11 @@ var request = require("request");
 var keys = require("./keys.js");
 var Spotify = require("node-spotify-api");
 var spotify = new Spotify(keys.spotify);
-var command = process.argv[2];
+
+
 
 // Accessing the Spotify API to retreive song information
-function searchSpotify () {
-
-    // Allowing the input to search multi-word songs
-    var input = process.argv.slice(3).join(" ");
+function searchSpotify (input) {
     // If nothing is searched, The Sign will be used
     if (input === "") {
         input = "The Sign Ace of Base"
@@ -32,9 +30,7 @@ function searchSpotify () {
 };
 
 // Accessing the Bands in Town API to get concert information
-function searchBIT () {
-    // Allowing the input to take more than single word bands
-    var input = process.argv.slice(3).join(" ");
+function searchBIT (input) {
     // Requiring moment to format the concert date
     var moment = require("moment");
     // Bands in Town Request
@@ -54,9 +50,7 @@ function searchBIT () {
 };
 
 // Accessing the OMDB API to get movie information
-function searchOMDB () {
-    // Allowing the input to take more than single word movies
-    var input = process.argv.slice(3).join(" ");
+function searchOMDB (input) {
     // If nothing is searched, Mr. Nobody will be used.
     if (input === "") {
         input = "Fantastic Mr. Fox"
@@ -81,7 +75,7 @@ function searchOMDB () {
 };
 
 // Accessing the random.txt file to search via Spotify
-function doAsFileSays () {
+function doAsFileSays (input) {
     // Requiring fs
     var fs = require("fs");
     // Making input equal to the file
@@ -98,35 +92,36 @@ function doAsFileSays () {
             var newSearch = input[1];
             console.log(input);
             console.log(input[0]);
-            switchFunction(fileCommand)
+            switchFunction(fileCommand, newSearch)
             
         }
     })
 }
 
 // Creating a switch statement to loop through functions 
-var switchFunction = function (command) {
-    switch (command) {
+var switchFunction = function () {
+    var input = process.argv.slice(3).join(" ");
+    switch (process.argv[2]) {
         case "spotify-this-song":
-        searchSpotify();
+        searchSpotify(input);
         break;
 
         case "concert-this":
-        searchBIT();
+        searchBIT(input);
         break;
 
         case "movie-this":
-        searchOMDB();
+        searchOMDB(input);
         break;
 
         case "do-what-it-says":
-        doAsFileSays();
+        doAsFileSays(input);
         break;
     };
 };
 
 // Calling the switchFunction so that it runs each time
-switchFunction(command);
+switchFunction(x);
 
 // Used to take a look at the process.argv array to ensure that I am pulling the correct string
 console.log(process.argv);
