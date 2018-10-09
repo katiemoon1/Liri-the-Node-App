@@ -19,6 +19,19 @@ After selecting which command the user wants to use, the user states their searc
 
 `spotify-this-song Fat Lip`
 
+Here are some examples of the working code:
+1. Running spotify-this-song with and without a parameter
+![Spotify Example](spotify-this-song-examples)
+
+2. Running concert-this
+![Concert Example](concert-this-example)
+
+3. Running movie-this with and without a parameter
+![Movie Example](movie-this-examples)
+
+4. Running do-what-it-says
+![Run it Example](do-what-it-says)
+
 # Where can the users get help with the project?
 Please contact me if you experience any problems!
 
