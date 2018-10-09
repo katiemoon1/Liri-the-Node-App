@@ -9,7 +9,7 @@ var spotify = new Spotify(keys.spotify);
 // Accessing the Spotify API to retreive song information
 function searchSpotify (input) {
     // If nothing is searched, The Sign will be used
-    if (input === "") {
+    if (input == "") {
         input = "The Sign Ace of Base"
     };
     // Searching Spotify for track information
@@ -32,7 +32,7 @@ function searchBIT (input) {
     // Requiring moment to format the concert date
     var moment = require("moment");
     // Bands in Town Request
-    request("https://rest.bandsintown.com/artists/" + input + "/events?app_id=codingbootcamp", function(error, response, body) {
+    request("https://rest.bandsintown.com/artists/" + input + "/events?app_id=codingbootcamp", function (error, response, body) {
         if (error) {
             console.log("An error occured: " + error)
         } else {
@@ -50,11 +50,11 @@ function searchBIT (input) {
 // Accessing the OMDB API to get movie information
 function searchOMDB (input) {
     // If nothing is searched, Mr. Nobody will be used.
-    if (input === "") {
+    if (input == "") {
         input = "Fantastic Mr. Fox"
     };
     // OMDB request
-    request("http://www.omdbapi.com/?t=" + input + "&y=&plot=short&apikey=trilogy", function (error, response, body) {
+    request("http://www.omdbapi.com/?t=" + input + "&y=&plot=shortnode&apikey=trilogy", function (error, response, body) {
         if (error) {
             console.log("An error occured: " + error)
         } else {
