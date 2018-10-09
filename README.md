@@ -21,16 +21,16 @@ After selecting which command the user wants to use, the user states their searc
 
 Here are some examples of the working code:
 1. Running spotify-this-song with and without a parameter
-![Spotify Example](spotify-this-song-examples)
+![Spotify Example](images/spotify-this-song-examples)
 
 2. Running concert-this
-![Concert Example](concert-this-example)
+![Concert Example](images/concert-this-example)
 
 3. Running movie-this with and without a parameter
-![Movie Example](movie-this-examples)
+![Movie Example](images/movie-this-examples)
 
 4. Running do-what-it-says
-![Run it Example](do-what-it-says)
+![Run it Example](images/do-what-it-says)
 
 # Where can the users get help with the project?
 Please contact me if you experience any problems!
