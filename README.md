@@ -30,7 +30,7 @@ Here are some examples of the working code:
 ![Movie Example](images/movie-this-examples.png "OMDB")
 
 4. Running do-what-it-says
-![Run it Example](images/do-what-it-says "TXT")
+![Run it Example](images/do-what-it-says.png "TXT")
 
 # Where can the users get help with the project?
 Please contact me if you experience any problems!
