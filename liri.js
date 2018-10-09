@@ -6,8 +6,6 @@ var keys = require("./keys.js");
 var Spotify = require("node-spotify-api");
 var spotify = new Spotify(keys.spotify);
 
-
-
 // Accessing the Spotify API to retreive song information
 function searchSpotify (input) {
     // If nothing is searched, The Sign will be used
@@ -79,7 +77,7 @@ function doAsFileSays (input) {
     // Requiring fs
     var fs = require("fs");
     // Making input equal to the file
-    var input = [];
+    var input = ["random", "stuff"];
     // Reading the random.txt file
     fs.readFile("random.txt", "utf8", function (error, data) {
 
@@ -87,21 +85,20 @@ function doAsFileSays (input) {
             console.log("An error occured: " + error)
         } else {
            console.log(data);
-            input = data.split(",");
-            var fileCommand = input[0];
-            var newSearch = input[1];
-            console.log(input);
-            console.log(input[0]);
-            switchFunction(fileCommand, newSearch)
-            
+            data = data.split(",")
+            console.log(data);
+            var newArr = input.concat(data);
+            console.log(newArr)
+            // Sending newArr through switchFunction
+            switchFunction(newArr);
         }
     })
 }
 
 // Creating a switch statement to loop through functions 
 var switchFunction = function (x) {
-    var input = x.slice(3).join(" ");
-    switch (process.argv[2]) {
+    var input = x.slice(3);
+    switch (x[2]) {
         case "spotify-this-song":
         searchSpotify(input);
         break;
@@ -113,9 +110,9 @@ var switchFunction = function (x) {
         case "movie-this":
         searchOMDB(input);
         break;
-
+        // input is not needed because doAsFileSays is an anonymous function
         case "do-what-it-says":
-        doAsFileSays(input);
+        doAsFileSays();
         break;
     };
 };
