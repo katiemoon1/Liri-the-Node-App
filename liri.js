@@ -99,8 +99,8 @@ function doAsFileSays (input) {
 }
 
 // Creating a switch statement to loop through functions 
-var switchFunction = function () {
-    var input = process.argv.slice(3).join(" ");
+var switchFunction = function (x) {
+    var input = x.slice(3).join(" ");
     switch (process.argv[2]) {
         case "spotify-this-song":
         searchSpotify(input);
@@ -121,7 +121,7 @@ var switchFunction = function () {
 };
 
 // Calling the switchFunction so that it runs each time
-switchFunction(x);
+switchFunction(process.argv);
 
 // Used to take a look at the process.argv array to ensure that I am pulling the correct string
 console.log(process.argv);
